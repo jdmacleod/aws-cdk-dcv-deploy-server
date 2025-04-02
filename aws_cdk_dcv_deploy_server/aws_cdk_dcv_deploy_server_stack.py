@@ -14,8 +14,9 @@ from aws_cdk.aws_s3_assets import Asset
 from constructs import Construct
 
 vpc_id = "MY-VPC-ID"  # Use an existing VPC
+sg_id = "MY-SecurityGroup-ID"  # Use an existing Security Group
 ec2_type = "g4dn.xlarge"  # g4dn.xlarge is recommended instance type for this DCV AMI
-key_name = "ec2-key-pair"  # the name of the Key Pair
+key_name = "ec2-key-pair"  # the name of the Key Pair for SSH access
 dcv_linux_ami = ec2.GenericLinuxImage(
     {
         "us-west-2": "ami-017d0c53440a48b8b",  # The Marketplace NiceDCV Amazon Linux 2 instance AMI
@@ -31,6 +32,11 @@ class AwsCdkDcvDeployServerStack(Stack):
 
         # VPC - using VPC id defined above
         vpc = ec2.Vpc.from_lookup(self, "VPC", vpc_id=vpc_id)
+
+        # Security Group - using SG id defined above
+        sg = ec2.SecurityGroup.from_lookup_by_id(
+            self, "SecurityGroup", security_group_id=sg_id
+        )
 
         # AMI
         # use defined AMI above
@@ -54,6 +60,7 @@ class AwsCdkDcvDeployServerStack(Stack):
             instance_name="DCV-managed-instance-01",
             machine_image=dcv_linux_ami,
             vpc=vpc,
+            security_group=sg,
             role=role,
         )
 
