@@ -25,7 +25,7 @@ sudo yum update -y
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # set DCV Server to get authentication from internal broker
-BROKER_PRIVATE_DNS="SESSION-MGR-PRIVATE-DNS"
+BROKER_PRIVATE_DNS="ip-10-0-2-171.us-west-2.compute.internal"
 sed -i --expression "s|#auth-token-verifier=\"https://127.0.0.1:8444\"|auth-token-verifier=\"https://$BROKER_PRIVATE_DNS:8445/agent/validate-authentication-token\"|" /etc/dcv/dcv.conf
 sed -i "/\[security\]/a administrators=[\"dcvsmagent\"]\nno-tls-strict=true" /etc/dcv/dcv.conf
 sed -i --expression "s|broker_host = ''|broker_host = \"$BROKER_PRIVATE_DNS\"|" /etc/dcv-session-manager-agent/agent.conf
