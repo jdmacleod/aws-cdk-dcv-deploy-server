@@ -46,4 +46,18 @@ dcv_server_linux_rhel_rocky_stack = DcvServerLinux(
 )
 dcv_server_linux_rhel_rocky_stack.add_dependency(dcv_infra_stack)
 
+# Create a DCV Server Instance, using infrastructure components
+dcv_server_linux_ubuntu_stack = DcvServerLinux(
+    app,
+    "DcvServerLinuxStackUbuntu",
+    description="(uksb-1tupboc66) (tag:dcv-server)",
+    config_data=config_data,
+    vpc=dcv_infra_stack.vpc,
+    role_fleet=dcv_infra_stack.role_dcv_fleet,
+    sg_dcv_server=dcv_infra_stack.sg_dcv_server,
+    os_name="ub2024-no-gpu",
+    env=environment,
+)
+dcv_server_linux_ubuntu_stack.add_dependency(dcv_infra_stack)
+
 app.synth()
