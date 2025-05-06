@@ -7,6 +7,11 @@ Creates minimal infrastructure for DCV (a VPC, some roles); Deploys a DCV server
 - Into an existing VPC
 - Using a specific hardware profile
 
+## Prerequisites
+
+- [Python](https://www.python.org/) (tested with Python 3.13, but other versions may work.)
+- [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)
+
 ## Quickstart
 
 ```bash
